@@ -161,3 +161,63 @@ Common clojure idiom:
  * use `deliver` to set the value of the promise, which unblocks the future's thread and executes
 
 A promise is _what_, a future is _how_.
+
+#### Find
+
+ * What is the difference between `future` and `future-call`?
+
+> `(future-call f)`
+> Takes a function of no args and yields a `future` object that will
+> invoke the function in another thread, and will cache the result and
+> return it on all subsequent calls to `deref`/`@`. If the computation has
+> not yet finished, calls to `deref`/`@` will block, unless the variant
+> of deref with timeout is used.
+
+_"The future macro is just syntax sugar around future-call"_ - [Object Commando Blog](http://objectcommando.com/blog/2010/06/10/clojure-futures/)
+
+ * How would you implement one in terms of the other?
+
+ * How do you tell if a future has been realized without blocking?
+ * How do you cancel a future?
+
+From the blog post linked above, given a future `f`
+
+```
+(def f
+  (future
+    (println "Starting to sleep...")
+    (Thread/sleep 600000)
+    (println "Done sleeping.")))
+```
+
+This future sleeps for an hour (should give us enough time to poke at it).
+The future object itself can be interrogated:
+
+```
+(future-done? f)
+=> false
+
+(future-cancelled? f)
+=> false
+You can then decide to cancel the future:
+
+(future-cancel f)
+=>true
+
+(future-cancel f)
+=>false
+```
+
+#### Do
+
+ * Modify the transcript server so that a GET request to _/translation/:n_ doesn't block if the translation isn't yet available, but returns an HTTP 409 status code instead
+
+ * Implement the transcript server in an imperative language. Is your solution as simple as the functional Clojure implementation? How confident are you that it contains no race conditions?
+
+### Wrap-Up
+
+ * Monads / Monoids
+
+> A statically typed functional language like Haskell uses concepts like monads and monoids to allow its type system to accurately encode restrictions on where particular functions and values can be used and to keep track of side effects while remaining functional.
+
+In Clojure, the burden is on the developer "to make sure that functions and values are used in appropriate contexts."
