@@ -142,7 +142,7 @@ The parameters vector is implied from the argument literals `%1` and `%2`, so yo
 
  * __referential transparency__ - _"anywhere an invocation of the function appears, we can replace it with its result without changing the behavior of the program" (pg. 72)_
 
- * __"Clojure is an impure functional language - it is possible to write [non-referentially transparent functions]" (pg. 73)__
+ * _"Clojure is an impure functional language - it is possible to write [non-referentially transparent functions]" (pg. 73)_
 
  * Clojure enables concurrency via __dataflow programming__ which is realized via __futures__ and __promises__
 
