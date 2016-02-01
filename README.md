@@ -76,3 +76,33 @@ _why does `loop` "require an even number of forms in binding vector" ?_
 => first cannot be cast to java.lang.Number
 
  * Rewrite `reduce-sum` to use the `#()` reader macro instead of `(fn ...)`
+
+This is a simple substitution.
+
+From the docs:
+
+> Anonymous function literal (#())
+> `#(...) ⇒ (fn [args] (...))`
+> where args are determined by the presence of argument literals
+> taking the form `%`, `%n` or `%&`. `%` is a synonym for `%1`, `%n` designates
+> the nth arg (1-based), and `%&` designates a rest arg. This is not
+> a replacement for `fn` - idiomatic use would be for very short
+> one-off mapping/filter `fn`s and the like.
+> `#()` forms cannot be nested.
+
+original:
+
+```
+(defn reduce-sum [numbers]
+  (reduce (fn [acc x] (+ acc x)) 0 numbers))
+```
+
+modified:
+
+`acc` becomes `%1` (argument 1) and `x` becomes `%2`.
+The parameters vector is implied from the argument literals `%1` and `%2`, so you could think of it as `(fn [%1 %2] (+ %1 %2))`
+
+```
+(defn reduce-sum [numbers]
+  (reduce #(+ %1 %2) 0 numbers))
+```
