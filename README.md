@@ -75,6 +75,8 @@ _why does `loop` "require an even number of forms in binding vector" ?_
 
 => first cannot be cast to java.lang.Number
 
+#### Do
+
  * Rewrite `reduce-sum` to use the `#()` reader macro instead of `(fn ...)`
 
 This is a simple substitution.
@@ -106,3 +108,28 @@ The parameters vector is implied from the argument literals `%1` and `%2`, so yo
 (defn reduce-sum [numbers]
   (reduce #(+ %1 %2) 0 numbers))
 ```
+
+### Day 2
+
+#### Find
+
+ * The video of Rich Hickey presenting reducers at QCon 2012 [video link](https://vimeo.com/45561411)
+   * Blog post on reducers [web link](http://clojure.com/blog/2012/05/08/reducers-a-library-and-model-for-collection-processing.html)
+
+ * The documentation for `pcalls` and `pvalues`
+   * `pcalls` - Executes the no-arg fns in parallel, returning a lazy sequence of their values
+     * [link](https://clojuredocs.org/clojure.core/pcalls)
+     * `(pcalls function-1 function-2 ...)` => (result1 result2 ...)
+   * `pvalues - Returns a lazy sequence of the values of the exprs, which are evaluated in parallel
+     * [link](https://clojuredocs.org/clojure.core/pvalues)
+     * `(pvalues (expensive-calc-1) (expensive-calc-2))` => (2330 122)
+ * How do they differ from `pmap` ?
+   * `pcalls` vs `pvalues`: "`pvalues` is a convienience macro around `pcalls`, though because macros are not first class it can't be composed or passed around in the same way a function can"
+     * [from stackoverflow](http://stackoverflow.com/questions/21340186/clojure-pvalues-vs-pcalls)
+   * this is all well and good, but _how do they differ from `pmap` ?_
+ * Is it possible to implement `pcalls` and/or `pvalues` in terms of `pmap` ?
+
+#### Do
+
+ * Create `my-flatten` and `my-mapcat` along the lines of `my-map` (pg. 66)
+ * Create `my-filter`
