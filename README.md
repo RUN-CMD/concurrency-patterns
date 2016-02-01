@@ -10,6 +10,8 @@ This space unintentionally left blank.
 
 ## Chapter 3: Functional Programming
 
+__reify__ - to make something more _real_
+
 ### Day 1
 
 #### Find
@@ -133,3 +135,29 @@ The parameters vector is implied from the argument literals `%1` and `%2`, so yo
 
  * Create `my-flatten` and `my-mapcat` along the lines of `my-map` (pg. 66)
  * Create `my-filter`
+
+### Day 3
+
+#### Notes
+
+ * __referential transparency__ - _"anywhere an invocation of the function appears, we can replace it with its result without changing the behavior of the program" (pg. 72)_
+
+ * __"Clojure is an impure functional language - it is possible to write [non-referentially transparent functions]" (pg. 73)__
+
+ * Clojure enables concurrency via __dataflow programming__ which is realized via __futures__ and __promises__
+
+ * __futures__ - _"takes a body of code and executes it in another thread
+   * its return value is a `future` object
+   * we can retrieve the value of a future by dereferencing it with either `deref` or `@`
+   * dereferencing a future will block until the value is available (or _realized_)
+   * we can use this to create [a dataflow graph]
+
+ * __promises__ - similar to futures, except they do not execute immediately
+   * a promise's value is set with `deliver`
+
+Common clojure idiom:
+ * create a promise
+ * create a future that uses that promise
+ * use `deliver` to set the value of the promise, which unblocks the future's thread and executes
+
+A promise is _what_, a future is _how_.
