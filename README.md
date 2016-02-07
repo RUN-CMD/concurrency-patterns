@@ -221,3 +221,27 @@ You can then decide to cancel the future:
 > A statically typed functional language like Haskell uses concepts like monads and monoids to allow its type system to accurately encode restrictions on where particular functions and values can be used and to keep track of side effects while remaining functional.
 
 In Clojure, the burden is on the developer "to make sure that functions and values are used in appropriate contexts."
+
+## Chapter 4 - The Clojure Way
+
+### Day 1
+
+#### Notes
+
+__Persistent List__
+
+A persistent data strucure is a construct that allows separation of identity and state. Here, _identity_ means "the idea we're representing", and _state_ represents "how the idea is represented at any given point in time".
+
+Clojure represents a list as a persistent data structure by maintaining a representation of the list's state at every operation.
+
+Given a list `listv1` as `(1 2 3)`, Clojure represents this in memory as (visually) `[listv1] -> [1] -> [2] -> [3]`
+
+If we take that list `listv1`, prepend a value to it (say, 4), and define the result as `listv2`, we expect to have the result `(4 1 2 3)`. Clojure's representation now looks something like this:
+
+```
+[listv2] -> [4]
+                \
+      [listv1] -> [1] -> [2] -> [3]
+```
+
+At each definition, Clojure names and assigns a pointer to the head of the list representing the lists state at each point in time. If we traverse the result from `listv2`, we get `(4 1 2 3)`, which is the representation of our list identity with the state as it existed when we defined  `listv2`. However, we can still reference `listv1`, which still maintains a representation of the list at state `listv1`, which is still `(1 2 3)`.
