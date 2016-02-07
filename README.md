@@ -245,3 +245,5 @@ If we take that list `listv1`, prepend a value to it (say, 4), and define the re
 ```
 
 At each definition, Clojure names and assigns a pointer to the head of the list representing the lists state at each point in time. If we traverse the result from `listv2`, we get `(4 1 2 3)`, which is the representation of our list identity with the state as it existed when we defined  `listv2`. However, we can still reference `listv1`, which still maintains a representation of the list at state `listv1`, which is still `(1 2 3)`.
+
+This strikes me as similar to how git will represent different states ("commits") of a repository ("identity"), and may count as an implementation of the [memento design pattern](https://en.wikipedia.org/wiki/Memento_pattern).
